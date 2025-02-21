@@ -57,5 +57,17 @@ public class ListElement {
     public String toString() {
         return "Name: " + getName() + ", Address: " + getAddress();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true; // Сравнение по ссылке
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false; // Проверка на null и совпадение классов
+        }
+        ListElement other = (ListElement) obj;
+        return this.getName().equals(other.getName()) && this.getAddress().equals(other.getAddress());
+    }
 }
 

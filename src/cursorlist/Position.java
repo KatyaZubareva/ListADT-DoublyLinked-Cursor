@@ -1,26 +1,24 @@
 package cursorlist;
 
 /**
- * Класс для представления позиции в списке.
- * Позиция указывает на индекс элемента в массиве узлов.
+ * Класс, представляющий позицию в списке.
+ * Позиция хранит индекс, который указывает на местоположение элемента в массиве.
  */
 public class Position {
-    private int index; // Индекс элемента в массиве узлов
+    public int index;
 
     /**
-     * Конструктор для создания позиции.
-     * @param index Индекс в массиве элементов.
+     * Конструктор, инициализирующий позицию индексом.
+     * @param index Индекс, который будет присвоен позиции.
      */
     public Position(int index) {
         this.index = index;
     }
 
-    /**
-     * Метод для получения индекса элемента на позиции.
-     * @return Индекс элемента в массиве.
-     */
-    public int getIndex() {
-        return index;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Position position = (Position) object;
+        return (this.index == position.index);
     }
 }
-

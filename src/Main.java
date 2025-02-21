@@ -1,49 +1,71 @@
-import cursorlist.*;
+import doublylinkedlist.*;
+// Замените на doublylinkedlist.* для работы с двусвязным списком.
+// Замените на cursorlist.* для работы со списком на курсорах.
 
-/**
- * Главный класс для демонстрации работы со списком и удаления дубликатов.
- */
 public class Main {
     public static void main(String[] args) {
-        List list = new List(10);
+        // Создание списка
+        List list = new List();
 
-        list.INSERT(new ListElement("Алиса", "ул. Главная, 123"), list.END());
-        list.INSERT(new ListElement("Дима", "ул. Кленовая, 456"), list.END());
-        list.INSERT(new ListElement("Алиса", "ул. Главная, 123"), list.END());
-        list.INSERT(new ListElement("Оля", "ул. Дубовая, 789"), list.END());
+        // Заполнение списка элементами
+        list.insert(new ListElement("Tom", "address6"), list.end());
+        list.insert(new ListElement("Tom", "address6"), list.end());
+        list.insert(new ListElement("Tom", "address6"), list.end());
+        list.insert(new ListElement("Tom", "address6"), list.end());
 
-        System.out.println("Список после вставки элементов:");
-        list.PRINTLIST();
+        System.out.println("====================================");
+        System.out.println("Исходный список:");
+        System.out.println("====================================");
+        printList(list);
 
+        // Удаление дубликатов
         removeDuplicates(list);
 
-        System.out.println("\nСписок после удаления дубликатов:");
-        list.PRINTLIST();
+        System.out.println("\n====================================");
+        System.out.println("Список после удаления дубликатов:");
+        System.out.println("====================================");
+        printList(list);
     }
 
     /**
-     * Метод для удаления дубликатов элементов в списке.
-     * Проходит по каждому элементу и удаляет все последующие элементы с такими же данными.
-     *
-     * @param list Список, из которого необходимо удалить дубликаты.
+     * Удаляет дубликаты из списка.
+     * @param list Список, из которого нужно удалить дубликаты.
      */
-    private static void removeDuplicates(List list) {
-        Position current = list.FIRST();  // Начинаем с первого элемента
-        while (current != null) {
-            ListElement currentElement = list.RETRIEVE(current);
-            Position next = list.NEXT(current);  // Следующий элемент
+    public static void removeDuplicates(List list) {
+        Position currentPosition = list.first();
 
-            while (next != null) {
-                ListElement nextElement = list.RETRIEVE(next);
-                // Если нашли дубликат, удаляем его
-                if (currentElement.getName().equals(nextElement.getName()) && currentElement.getAddress().equals(nextElement.getAddress())) {
-                    list.DELETE(next);  // Удаляем дубликат
-                    next = list.NEXT(current);  // Переходим к следующему элементу, чтобы избежать использования удаленной позиции
+        while (!currentPosition.equals(list.end())) {
+            Position nextPosition = list.next(currentPosition);
+
+            while (!nextPosition.equals(list.end())) {
+                if (list.retrieve(currentPosition).equals(list.retrieve(nextPosition))) {
+                    list.delete(nextPosition);
+                    nextPosition = list.next(currentPosition);
                 } else {
-                    next = list.NEXT(next);  // Иначе продолжаем проверку
+                    nextPosition = list.next(nextPosition);
                 }
             }
-            current = list.NEXT(current);  // Переходим к следующему элементу
+            currentPosition = list.next(currentPosition);
+        }
+    }
+
+    /**
+     * Выводит список в красивом формате.
+     * @param list Список для вывода.
+     */
+    public static void printList(List list) {
+        Position current = list.first();
+        int index = 1;
+
+        while (!current.equals(list.end())) {
+            ListElement element = list.retrieve(current);
+            System.out.printf("%d. Имя: %-10s | Адрес: %s%n", index, element.getName(), element.getAddress());
+            current = list.next(current);
+            index++;
+        }
+
+        if (index == 1) {
+            System.out.println("Список пуст.");
         }
     }
 }
