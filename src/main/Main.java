@@ -1,3 +1,5 @@
+package main;
+
 import doublylinkedlist.*;
 // Замените на doublylinkedlist.* для работы с двусвязным списком.
 // Замените на cursorlist.* для работы со списком на курсорах.
